@@ -1,0 +1,34 @@
+
+{
+    "name": "C/C++ Development Environment",
+    "dockerFile": "Dockerfile",
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "notebook.markup.fontSize": 14
+            },
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.makefile-tools",
+                "jbenden.c-cpp-flylint"
+            ]
+        }
+    },
+
+    "remoteEnv": {
+        "DISPLAY": "host.docker.internal:0",
+        "LIBGL_ALWAYS_INDIRECT": "1"
+    },
+
+    "remoteUser": "dev",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/dev/workspace/${localWorkspaceFolderBasename},type=bind",
+    "workspaceFolder": "/home/dev/workspace/${localWorkspaceFolderBasename}"
+}
