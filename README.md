@@ -8,7 +8,7 @@ This project provides [VS Code Development Container](https://code.visualstudio.
 Additionally, to run the UI out of the container, you need to use a X11 server. I will briefly explain how to run them in order to display the GUI from the container:
 
 **Windows**<br>
-I recommend  [VcXSrv](https://sourceforge.net/projects/vcxsrv/) if your host system is Windows, which I recommended for the Java-based CCM1 did not work here). Once you have it installed, start it via `xlaunch.exe` and enable the option `Disable access control` before you start the server. Now, you can start a GUI app in your container that will be displayed via the X-server on the host system.
+I recommend  [VcXSrv](https://sourceforge.net/projects/vcxsrv/) if your host system is Windows ([Xming](https://sourceforge.net/projects/xming/)) which I recommended for the Java-based CCM1 did not work here). Once you have it installed, start it via `xlaunch.exe` and enable the option `Disable access control` before you start the server. Now, you can start a GUI app in your container that will be displayed via the X-server on the host system.
 
 For running audio from your development container, you need a [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/) server on the host to forward sound from a Docker container to the host.
 
