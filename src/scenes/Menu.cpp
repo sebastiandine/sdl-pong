@@ -67,7 +67,6 @@ void Menu::initTextures() {
     // init fonts
     TTF_Font* fontLarge = TTF_OpenFont("./assets/fonts/symtext/Symtext.ttf", 100);
     TTF_Font* fontMedium = TTF_OpenFont("./assets/fonts/symtext/Symtext.ttf", 24);
-    std::cerr << "hallo" << std::endl;
     if (fontLarge == NULL || fontMedium == NULL) std::cerr << "Error initializing Font" << std::endl;
 
     // create textures

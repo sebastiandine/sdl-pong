@@ -1,6 +1,8 @@
-#include <iostream>
+#ifdef _WIN32 // _WIN32 is defined automatically by compilers targeting Windows 
+#define SDL_MAIN_HANDLED // explicitly initialize SDL main (required on Windows with static link). see also the `main` function
+#endif
 
-#define SDL_MAIN_HANDLED
+#include <iostream>
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
@@ -139,7 +141,10 @@ void destroy_window() {
 }
 
 int main(int argc, char* argv[]) {
-    SDL_SetMainReady(); // explicitly tell SDL you're handling main
+
+    #ifdef _WIN32
+    SDL_SetMainReady(); // explicitly initialize SDL main (required on Windows with static link)
+    #endif
 
     gameIsRunning = init_window();
     currentScene = new Menu(renderer);

@@ -14,11 +14,12 @@ option(SDL_TEST "" OFF)          # Do not build SDL test programs
 option(SDL2TTF_VENDORED "" ON)        # use vendored copies of dependencies instead of relying on the build system
 option(SDL2MIXER_VENDORED "" ON)        # use vendored copies of dependencies instead of relying on the build system
 
-# ---[ Add SDL Subdirectories ]-------------------------------------------
+# ---[ Add dependency subdirectories to build them ]-------------------------------------------
 add_subdirectory(external/SDL)
 add_subdirectory(external/SDL_ttf)
 add_subdirectory(external/SDL_mixer)
 
+# ---[ Build executable from sources ]--------------------------------------------------
 
 # Source files
 file(GLOB SOURCES
@@ -26,23 +27,14 @@ file(GLOB SOURCES
     src/scenes/*.cpp
     main.cpp
 )
+if(WIN32)
+    add_executable(sdl_pong WIN32 ${SOURCES}) # On Windows, specify WIN32 to prevent console window if desired
+else()
+    add_executable(sdl_pong ${SOURCES})
+endif()
 
-# ---[ Your Executable ]--------------------------------------------------
-add_executable(sdl_pong ${SOURCES})
 
-# Tell CMake where to find SDL's headers
-#target_include_directories(sdl_pong PRIVATE
-#    ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL/include
-#    ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_ttf/include
-#    ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_mixer
-#)
-
-#
-# Link to static libraries:
-#   - SDL3::SDL3-static
-#   - SDL3_ttf::SDL3_ttf-static
-#   - SDL3_mixer::SDL3_mixer-static
-#
+# ---[ Link executable and dependencies ]--------------------------------------------------
 # If you prefer shared versions, just replace the “-static” targets
 # with “SDL3::SDL3”, “SDL3_ttf::SDL3_ttf”, etc.
 #
