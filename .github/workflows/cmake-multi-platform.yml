@@ -41,13 +41,17 @@ jobs:
         if: matrix.platform == 'windows-2025'
         uses: actions/upload-artifact@v4
         with:
-          name: artifact-win
-          path: ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe
+          name: sdl-pong-windows
+          path: |
+            ${{github.workspace}}\assets
+            ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe
 
       - name: Upload Linux Artifact
         if: matrix.platform == 'ubuntu-20.04'
         uses: actions/upload-artifact@v4
         with:
-          name: artifact-linux
-          path: ${{github.workspace}}/build/sdl_pong
+          name: sdl-pong-linux
+          path: |
+            ${{github.workspace}}/assets
+            ${{github.workspace}}/build/sdl_pong
       
