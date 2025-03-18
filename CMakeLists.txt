@@ -35,6 +35,14 @@ endif()
 
 
 # ---[ Link executable and dependencies ]--------------------------------------------------
+
+if(WIN32 AND MSVC)
+    # when the compiler on Windows is the Microsoft Compiler (Visual Studio), we need to configure this linker flag so 
+    # the main function is recognized properly. 
+    set_target_properties(sdl_pong PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+endif()
+
+
 # If you prefer shared versions, just replace the “-static” targets
 # with “SDL3::SDL3”, “SDL3_ttf::SDL3_ttf”, etc.
 #
