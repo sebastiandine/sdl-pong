@@ -1,8 +1,9 @@
 #include <iostream>
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+#define SDL_MAIN_HANDLED
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 #include "src/scenes/Scene.h"
 #include "src/scenes/PlayerVsCpu.h"
@@ -137,7 +138,9 @@ void destroy_window() {
     SDL_Quit();
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    SDL_SetMainReady(); // explicitly tell SDL you're handling main
+
     gameIsRunning = init_window();
     currentScene = new Menu(renderer);
 
