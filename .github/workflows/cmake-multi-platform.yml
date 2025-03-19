@@ -33,22 +33,32 @@ jobs:
       - name: Build
       # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      
+      - name: Bundle Windows Artifact
+        if: matrix.platform == 'windows-2025'
+        run: |
+          mkdir artifact
+          cp -r ${{github.workspace}}\assets artifact\
+          cp ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe artifact\
 
       - name: Upload Windows Artifact
         if: matrix.platform == 'windows-2025'
         uses: actions/upload-artifact@v4
         with:
           name: sdl-pong-windows
-          path: |
-            ${{github.workspace}}\assets
-            ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe
+          path: ${{github.workspace}}\artifact\
+
+      - name: Bundle Linux Artifact
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          mkdir artifact
+          cp -r ${{github.workspace}}/assets artifact/
+          cp ${{github.workspace}}/build/sdl_pong artifact/
 
       - name: Upload Linux Artifact
         if: matrix.platform == 'ubuntu-20.04'
         uses: actions/upload-artifact@v4
         with:
           name: sdl-pong-linux
-          path: |
-            ${{github.workspace}}/assets
-            ${{github.workspace}}/build/sdl_pong
+          path: ${{github.workspace}}/artifact/
       

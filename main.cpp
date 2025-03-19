@@ -1,5 +1,13 @@
-#ifdef _WIN32 // _WIN32 is defined automatically by compilers targeting Windows 
+// if the game is compiled on Windows via MinGW, we need to flag the `main` function explicitly
+// to override SDL from searching for the commonly expected `main` function signature.
+#if defined(_WIN32) && (defined(__MINGW32__) || defined(__MINGW64__))
 #define SDL_MAIN_HANDLED // explicitly initialize SDL main (required on Windows with static link). see also the `main` function
+#endif
+
+// if the game is compiled on Windows via MSVC, we need the main function to support
+// the Windows window application convention
+#ifdef _MSC_VER
+#include <windows.h>
 #endif
 
 #include <iostream>
@@ -140,12 +148,7 @@ void destroy_window() {
     SDL_Quit();
 }
 
-int main(int argc, char* argv[]) {
-
-    #ifdef _WIN32
-    SDL_SetMainReady(); // explicitly initialize SDL main (required on Windows with static link)
-    #endif
-
+int _main() {
     gameIsRunning = init_window();
     currentScene = new Menu(renderer);
 
@@ -159,3 +162,19 @@ int main(int argc, char* argv[]) {
     destroy_window();
     return 0;
 }
+
+int main(int argc, char* argv[]) {
+
+    #if defined(_WIN32) && (defined(__MINGW32__) || defined(__MINGW64__))
+    SDL_SetMainReady(); // explicitly initialize SDL main (required on Windows with static link)
+    #endif
+    return _main();
+}
+
+// on windows with MSVC compiler, we need to support this main function signature
+#ifdef _MSC_VER
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+    return _main();
+}
+#endif
+
