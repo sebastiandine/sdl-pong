@@ -4,11 +4,11 @@ project(SDL-Pong CXX)
 # (Optional) Specify your C++ standard
 set(CMAKE_CXX_STANDARD 11)
 
-option(BUILD_SHARED_LIBS "" OFF)        # Disable building SDL as a shared library
+# option(BUILD_SHARED_LIBS "" OFF)        # Disable building SDL as a shared library
 # ---[ SDL BUILD OPTIONS ]------------------------------------------------
 # option(SDL_SHARED "" OFF)        # Disable building SDL as a shared library
 # option(SDL_STATIC "" ON)         # Enable building SDL as a static library
-option(SDL_TEST "" OFF)          # Do not build SDL test programs
+#option(SDL_TEST "" OFF)          # Do not build SDL test programs
 
 # ---[ SDL_TTF BUILD OPTIONS ]------------------------------------------------
 option(SDL2TTF_VENDORED "" ON)        # use vendored copies of dependencies instead of relying on the build system
@@ -38,10 +38,20 @@ endif()
 # If you prefer shared versions, just replace the “-static” targets
 # with “SDL3::SDL3”, “SDL3_ttf::SDL3_ttf”, etc.
 #
-target_link_libraries(
-    sdl_pong
-    PRIVATE
-        SDL2::SDL2-static
-        SDL2_ttf::SDL2_ttf-static
-        SDL2_mixer::SDL2_mixer-static
-)
+if(BUILD_SHARED_LIBS)
+    target_link_libraries(
+        sdl_pong
+        PRIVATE
+            SDL2::SDL2
+            SDL2_ttf::SDL2_ttf
+            SDL2_mixer::SDL2_mixer
+    )
+else()
+    target_link_libraries(
+        sdl_pong
+        PRIVATE
+            SDL2::SDL2-static
+            SDL2_ttf::SDL2_ttf-static
+            SDL2_mixer::SDL2_mixer-static
+    )
+endif() 

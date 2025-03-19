@@ -11,6 +11,8 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  # Dynamic linking = ON, statig linking = OFF
+  BUILD_SHARED_LIBS: ON
 
 jobs:
   build:
@@ -28,7 +30,7 @@ jobs:
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_SHARED_LIBS=${{env.BUILD_SHARED_LIBS}}
 
       - name: Build
       # Build your program with the given configuration
@@ -39,6 +41,7 @@ jobs:
         run: |
           mkdir artifact
           cp -r ${{github.workspace}}\assets artifact\
+          cp ${{github.workspace}}\build\external\*\*.dll artifact\
           cp ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe artifact\
 
       - name: Upload Windows Artifact
@@ -53,6 +56,7 @@ jobs:
         run: |
           mkdir artifact
           cp -r ${{github.workspace}}/assets artifact/
+          cp ${{github.workspace}}/build/external/*/*.o artifact/
           cp ${{github.workspace}}/build/sdl_pong artifact/
 
       - name: Upload Linux Artifact
