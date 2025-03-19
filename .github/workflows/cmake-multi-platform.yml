@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir artifact
           cp -r ${{github.workspace}}\assets artifact\
-          cp ${{github.workspace}}\build artifact\
+          cp -r ${{github.workspace}}\build artifact\
           cp ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe artifact\
 
       - name: Upload Windows Artifact
@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir artifact
           cp -r ${{github.workspace}}/assets artifact/
-          cp ${{github.workspace}}/build artifact/
+          cp -r ${{github.workspace}}/build artifact/
           cp ${{github.workspace}}/build/sdl_pong artifact/
 
       - name: Upload Linux Artifact
