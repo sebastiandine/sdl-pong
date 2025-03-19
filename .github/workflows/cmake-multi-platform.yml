@@ -41,8 +41,9 @@ jobs:
         run: |
           mkdir artifact
           cp -r ${{github.workspace}}\assets artifact\
-          cp -r ${{github.workspace}}\build artifact\
           cp ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe artifact\
+          [ "${{env.BUILD_SHARED_LIBS}}" = "ON" ] && cp ${{github.workspace}}\build\external\*\${{env.BUILD_TYPE}}\*.dll artifact\
+          
 
       - name: Upload Windows Artifact
         if: matrix.platform == 'windows-2025'
@@ -56,8 +57,9 @@ jobs:
         run: |
           mkdir artifact
           cp -r ${{github.workspace}}/assets artifact/
-          cp -r ${{github.workspace}}/build artifact/
           cp ${{github.workspace}}/build/sdl_pong artifact/
+          [ "${{env.BUILD_SHARED_LIBS}}" = "ON" ] && cp ${{github.workspace}}/build/external/*/*.so artifact/
+
 
       - name: Upload Linux Artifact
         if: matrix.platform == 'ubuntu-20.04'
