@@ -42,7 +42,7 @@ jobs:
           mkdir artifact
           cp -r ${{github.workspace}}\assets artifact\
           cp ${{github.workspace}}\build\${{env.BUILD_TYPE}}\sdl_pong.exe artifact\
-          if (${{env.BUILD_SHARED_LIBS}} -eq "ON" ) { cp ${{github.workspace}}\build\external\*\${{env.BUILD_TYPE}}\*.dll artifact\ }
+          if ("${{env.BUILD_SHARED_LIBS}}" -eq "ON" ) { cp ${{github.workspace}}\build\external\*\${{env.BUILD_TYPE}}\*.dll artifact\ }
           
 
       - name: Upload Windows Artifact
