@@ -9,6 +9,12 @@ set(CMAKE_CXX_STANDARD 11)
 option(SDL2TTF_VENDORED "" ON)        # use vendored copies of dependencies instead of relying on the build system
 option(SDL2MIXER_VENDORED "" ON)        # use vendored copies of dependencies instead of relying on the build system
 
+# ---[ Add include directories with header files ] ----------
+include_directories(
+    src/objects
+    src/scenes
+)
+
 # ---[ Add dependency subdirectories to build them ]-------------------------------------------
 add_subdirectory(external/SDL)
 add_subdirectory(external/SDL_ttf)
